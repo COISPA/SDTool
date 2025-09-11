@@ -1,0 +1,15 @@
+Package: SDTool
+Type: Package
+Title: Tools for Fisheries Data Analysis
+Version: 0.1.0
+Authors@R: 
+    person("Nome", "Cognome", email = "tuo@email.it",
+           role = c("aut", "cre"))
+Description: A minimal R package skeleton with roxygen2 documentation.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: false
+URL: https://github.com/tuoutente/SDTool
+BugReports: https://github.com/tuoutente/SDTool/issues
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
