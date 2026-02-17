@@ -1,0 +1,60 @@
+#' Dummy CS dataset for GSA99 (HKE)
+#'
+#' A small dummy Catch Sampling (CS) dataset derived from
+#' "CS-GSA99 2014-2016_HKE.csv".
+#'
+#' The dataset is intended for examples and testing of the
+#' CS -> CL -> COST conversion workflow implemented in this package.
+#'
+#' @format A data.frame with 4549 rows and 40 variables:
+#' \describe{
+#'   \item{Sampling.type}{Type of sampling (e.g. M = market sampling)}
+#'   \item{Flag.country}{Vessel flag country}
+#'   \item{Year}{Sampling year}
+#'   \item{Trip.code}{Trip identifier}
+#'   \item{Harbour}{Landing harbour}
+#'   \item{number_of_setshauls}{Number of sets or hauls}
+#'   \item{Days.at.sea}{Number of days at sea}
+#'   \item{Sampling.method}{Sampling method used}
+#'   \item{Aggregation.level}{Aggregation level (e.g. T = trip)}
+#'   \item{Station.number}{Station identifier}
+#'   \item{Duration.of.fishing.operation}{Duration of fishing operation}
+#'   \item{Initial.latitude}{Initial latitude of operation}
+#'   \item{Initial.longitude}{Initial longitude of operation}
+#'   \item{Final.latitude}{Final latitude of operation}
+#'   \item{Final.longitude}{Final longitude of operation}
+#'   \item{Depth.of.fishing.operation}{Fishing depth}
+#'   \item{Water.depth}{Water depth}
+#'   \item{Catch.registration}{Catch registration type}
+#'   \item{Species.registration}{Species registration method}
+#'   \item{Date}{Sampling date}
+#'   \item{Area}{GSA area}
+#'   \item{fac_national}{National fishing activity category}
+#'   \item{metier}{Fishing métier}
+#'   \item{Species}{Species code}
+#'   \item{Catch.category}{Catch category}
+#'   \item{Weight}{Catch weight}
+#'   \item{Subsample.weight}{Subsample weight}
+#'   \item{Sex}{Sex of individual}
+#'   \item{Maturity.method}{Method used to determine maturity}
+#'   \item{Maturity.Scale}{Maturity scale used}
+#'   \item{Maturity.Stage}{Maturity stage}
+#'   \item{Ageing.method}{Method used for ageing}
+#'   \item{Age}{Age of individual}
+#'   \item{Length.code}{Length unit code}
+#'   \item{Length.class}{Length class}
+#'   \item{Number.at.length}{Number of individuals at length}
+#'   \item{Commercial.size.category.scale}{Commercial size category scale}
+#'   \item{Commercial.size.category}{Commercial size category}
+#'   \item{fish.ID}{Fish identifier}
+#'   \item{Individual.weight}{Individual weight}
+#' }
+#'
+#' @source Synthetic subset of CS-GSA99 2014-2016_HKE.csv
+#'
+#' @examples
+#' data(cs_gsa99_dummy)
+#' str(cs_gsa99_dummy)
+#' head(cs_gsa99_dummy)
+"cs_gsa99_dummy"
+
