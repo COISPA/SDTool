@@ -12,6 +12,8 @@ LazyData: true
 Depends: 
     R (>= 4.0)
 Imports:
+    COSTcore,
+    COSTdbe,
     utils
 Suggests:
     roxygen2,
