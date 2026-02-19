@@ -25,10 +25,12 @@ convert_cl_to_costCL <- function(
         log = TRUE,
         logFilePath = NULL,
         bad_rm = FALSE,
+        out_dir = ".",
         write_csv = FALSE,
-        csv_path = "SDEF CL data.csv",
+        csv_path = file.path(out_dir,"SDEF CL data.csv"),
         write_rds = FALSE,
-        rds_path = "costCL.rds"
+        rds_path = file.path(out_dir,"costCL.rds")
+
 ) {
     stopifnot(is.data.frame(CL))
 
@@ -39,6 +41,38 @@ convert_cl_to_costCL <- function(
         key <- gsub("[[:space:]]", "", key)
         key
     }
+
+    align_to_template <- function(df, template_df) {
+        df <- as.data.frame(df, stringsAsFactors = FALSE)
+
+        # add missing columns with correct NA type
+        for (nm in names(template_df)) {
+            if (!nm %in% names(df)) {
+                df[[nm]] <- template_df[[nm]][NA_integer_]
+            }
+        }
+
+        # coerce existing columns to template types
+        for (nm in names(template_df)) {
+            tgt <- class(template_df[[nm]])[1]
+            df[[nm]] <- switch(
+                tgt,
+                integer = as.integer(df[[nm]]),
+                numeric = as.numeric(df[[nm]]),
+                character = as.character(df[[nm]]),
+                logical = as.logical(df[[nm]]),
+                factor = as.factor(df[[nm]]),
+                Date = as.Date(df[[nm]]),
+                POSIXct = as.POSIXct(df[[nm]]),
+                df[[nm]]
+            )
+        }
+
+        # order columns
+        df <- df[, names(template_df), drop = FALSE]
+        df
+    }
+
 
     # ---- log init
     if (isTRUE(log)) {
@@ -160,7 +194,33 @@ convert_cl_to_costCL <- function(
     }
 
     # ---- create COST object
-    costCL <- COSTdbe::clData(cl = clDf)
+
+    # build clData object without calling unexported constructor
+    cl_class <- NULL
+    for (pkg in c("COSTdbe", "COSTcore")) {
+        if (requireNamespace(pkg, quietly = TRUE)) {
+            ns <- asNamespace(pkg)
+            if (methods::isClass("clData", where = ns)) {
+                cl_class <- methods::getClass("clData", where = ns)
+                break
+            }
+        }
+    }
+    if (is.null(cl_class)) {
+        stop("S4 class 'clData' not found. Check COST packages installed/loaded (COSTdbe/COSTcore).")
+    }
+
+    # template of the cl slot (correct names + types)
+    cl_template <- methods::new(cl_class)@cl
+
+    # align + coerce
+    clDf <- align_to_template(clDf, cl_template)
+
+    costCL <- methods::new(cl_class)
+    costCL@cl <- clDf
+    methods::validObject(costCL)
+
+
 
     if (isTRUE(write_rds)) {
         saveRDS(costCL, rds_path)
