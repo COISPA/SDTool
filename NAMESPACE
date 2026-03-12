@@ -2,3 +2,10 @@
 
 export(convert_cl_to_costCL)
 export(convert_cs_to_costCS)
+export(data_investigation)
+export(slSex)
+export(subsetCOST)
+import(COSTcore)
+import(COSTdbe)
+import(COSTeda)
+import(ggplot2)

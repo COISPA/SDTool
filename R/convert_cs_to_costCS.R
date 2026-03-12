@@ -26,6 +26,7 @@
 #' data(cs_gsa99_dummy)
 #' costCS <- convert_cs_to_costCS(cs_gsa99_dummy, bad_rm = TRUE, log_var = FALSE)
 #' costCS
+
 convert_cs_to_costCS <- function(
         CS,
         dataset_proj = "STREAM project",
@@ -34,12 +35,15 @@ convert_cs_to_costCS <- function(
         bad_rm = FALSE,
         write_csv = FALSE,
         out_dir = ".",
-        write_rds = FALSE,
+        write_rds = TRUE,
         rds_path = file.path(out_dir, "costCS.rds"),
         fill_na = -1
 ) {
     stopifnot(is.data.frame(CS))
 
+    dir.create("COSTobjects", recursive = FALSE, showWarnings = FALSE)
+
+    out_dir=file.path(out_dir, "COSTobjects")
     # ---- helper: primary key fingerprint
     fpKey <- function(tab, colIndex, sep = ":-:") {
         key <- tab[, colIndex, drop = FALSE]

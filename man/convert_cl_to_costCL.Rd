@@ -9,10 +9,11 @@ convert_cl_to_costCL(
   log = TRUE,
   logFilePath = NULL,
   bad_rm = FALSE,
+  out_dir = ".",
   write_csv = FALSE,
-  csv_path = "SDEF CL data.csv",
+  csv_path = file.path(out_dir, "SDEF CL data.csv"),
   write_rds = FALSE,
-  rds_path = "costCL.rds"
+  rds_path = file.path(out_dir, "costCL.rds")
 )
 }
 \arguments{

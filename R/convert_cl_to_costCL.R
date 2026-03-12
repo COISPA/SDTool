@@ -28,12 +28,14 @@ convert_cl_to_costCL <- function(
         out_dir = ".",
         write_csv = FALSE,
         csv_path = file.path(out_dir,"SDEF CL data.csv"),
-        write_rds = FALSE,
+        write_rds = TRUE,
         rds_path = file.path(out_dir,"costCL.rds")
 
 ) {
     stopifnot(is.data.frame(CL))
 
+    dir.create("COSTobjects", recursive = TRUE, showWarnings = FALSE)
+    out_dir=file.path(out_dir, "COSTobjects")
     # ---- helper: primary key fingerprint
     fpKey <- function(tab, colIndex, sep = ":-:") {
         key <- tab[, colIndex, drop = FALSE]

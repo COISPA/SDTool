@@ -10,11 +10,15 @@ License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Depends: 
-    R (>= 4.0)
+    R (>= 4.5)
 Imports:
     COSTcore,
     COSTdbe,
-    utils
+    utils,
+    dplyr,
+    COSTeda,
+    data.table,
+    ggplot2
 Suggests:
     roxygen2,
     devtools,
