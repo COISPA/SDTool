@@ -54,6 +54,7 @@
 #' }
 #'
 #' @keywords internal
+#' @export
 selectSampStr <- function(indStr,
                           availStrat,
                           availSamp,

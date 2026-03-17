@@ -49,6 +49,7 @@
 #' }
 #'
 #' @keywords internal
+#' @export
 setVar123 <- function(x,
                       space = c("GSA", "Country", "ALL"),
                       time = c("Q", "S", "Y"),

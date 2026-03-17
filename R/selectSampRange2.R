@@ -53,6 +53,7 @@
 #' }
 #'
 #' @keywords internal
+#' @export
 selectSampRange2 <- function(indStr,
                              availStrat,
                              cvFunS2,

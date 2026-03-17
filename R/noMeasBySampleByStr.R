@@ -44,6 +44,7 @@
 #' }
 #'
 #' @keywords internal
+#' @export
 noMeasBySampleByStr <- function(i,
                                 tabStrat,
                                 CSsp,

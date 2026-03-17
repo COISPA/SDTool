@@ -40,6 +40,7 @@
 #' }
 #'
 #' @keywords internal
+#' @export
 meanNmeasByTripByStr <- function(i,
                                  tabStrat,
                                  CSsp,
@@ -76,24 +77,24 @@ meanNmeasByTripByStr <- function(i,
     time <- match.arg(time)
     technical <- match.arg(technical)
 
-    ## ---------------------------------------------------------------------------
-    ## Helpers
-    ## ---------------------------------------------------------------------------
-    to_date <- function(x) {
-        if (inherits(x, "Date")) {
-            return(x)
-        }
-        as.Date(x, format = "%d/%m/%Y")
-    }
-
-    get_quarter <- function(x) {
-        x <- to_date(x)
-        ((as.integer(format(x, "%m")) - 1L) %/% 3L) + 1L
-    }
-
-    get_semester <- function(x) {
-        ifelse(get_quarter(x) %in% c(1, 2), 1L, 2L)
-    }
+    # ## ---------------------------------------------------------------------------
+    # ## Helpers
+    # ## ---------------------------------------------------------------------------
+    # to_date <- function(x) {
+    #     if (inherits(x, "Date")) {
+    #         return(x)
+    #     }
+    #     as.Date(x, format = "%d-%m-%Y")
+    # }
+    #
+    # get_quarter <- function(x) {
+    #     x <- to_date(x)
+    #     ((as.integer(format(x, "%m")) - 1L) %/% 3L) + 1L
+    # }
+    #
+    # get_semester <- function(x) {
+    #     ifelse(get_quarter(x) %in% c(1, 2), 1L, 2L)
+    # }
 
     ## ---------------------------------------------------------------------------
     ## Target stratum

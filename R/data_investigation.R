@@ -26,7 +26,18 @@ data_investigation <- function(CS,
                                technical = c("lev4", "lev6", "NONE"),
                                target_SPECIES,
                                output_dir = tempdir()) {
-
+    if (FALSE){
+        CS = costCS_from_CS
+        CL = costCL_from_CL
+        metier_shortcode = metier_shortcode
+        #past_situations = past_situations
+        space = "GSA"
+        time = "Q"
+        technical = "lev4"
+        target_SPECIES = target_species
+        nIter = 20      # basso per test veloce
+        output_dir = tempdir()
+    }
     space <- match.arg(space)
     time <- match.arg(time)
     technical <- match.arg(technical)
@@ -216,12 +227,12 @@ data_investigation <- function(CS,
                 )
             }
 
-            CSvalstr <- csDataVal(cs_loc)
-            CLvaly <- clDataVal(cl_ye)
-            CSconsstr <- csDataCons(CSvalstr, stratification)
-            CLconsy <- clDataCons(CLvaly, stratification)
+            CSvalstr <- COSTcore::csDataVal(cs_loc)
+            CLvaly <- COSTcore::clDataVal(cl_ye)
+            CSconsstr <- COSTcore::csDataCons(CSvalstr, stratification)
+            CLconsy <- COSTcore::clDataCons(CLvaly, stratification)
 
-            dbeOutputy <- dbeObject(
+            dbeOutputy <- COSTdbe::dbeObject(
                 desc = sppName,
                 species = sppName,
                 catchCat = "Lan",

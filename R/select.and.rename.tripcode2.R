@@ -26,6 +26,7 @@
 #' }
 #'
 #' @keywords internal
+#' @export
 select.and.rename.tripcode2 <- function(i,
                                         table,
                                         extention.list,

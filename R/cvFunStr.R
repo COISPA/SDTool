@@ -64,6 +64,9 @@
 #' }
 #'
 #' @keywords internal
+#' @export
+#' @import COSTcore COSTdbe
+
 cvFunStr <- function(caseInd,
                      stratification,
                      availStrat,
@@ -77,6 +80,21 @@ cvFunStr <- function(caseInd,
                      technical = c("lev6", "lev4", "NONE"),
                      lengthStr_dataframe = NULL) {
 
+
+    if (FALSE){
+        caseInd=nr
+        stratification=COSTcore::strIni()
+        availStrat
+        availSamp
+        CSobject=CS_boot
+        CLobjectList=CL_boot
+        target_SPECIES
+        nIter=5
+        space
+        time
+        technical
+        lengthStr_dataframe =LengthStr_dataframe
+    }
     ## ---------------------------------------------------------------------------
     ## Checks
     ## ---------------------------------------------------------------------------
@@ -131,21 +149,21 @@ cvFunStr <- function(caseInd,
     ## ---------------------------------------------------------------------------
     ## Helpers
     ## ---------------------------------------------------------------------------
-    to_date <- function(x) {
-        if (inherits(x, "Date")) {
-            return(x)
-        }
-        as.Date(x, format = "%d/%m/%Y")
-    }
-
-    get_quarter <- function(x) {
-        x <- to_date(x)
-        ((as.integer(format(x, "%m")) - 1L) %/% 3L) + 1L
-    }
-
-    get_semester <- function(x) {
-        ifelse(get_quarter(x) %in% c(1, 2), 1L, 2L)
-    }
+    # to_date <- function(x) {
+    #     if (inherits(x, "Date")) {
+    #         return(x)
+    #     }
+    #     as.Date(x, format = "%d/%m/%Y")
+    # }
+    #
+    # get_quarter <- function(x) {
+    #     x <- to_date(x)
+    #     ((as.integer(format(x, "%m")) - 1L) %/% 3L) + 1L
+    # }
+    #
+    # get_semester <- function(x) {
+    #     ifelse(get_quarter(x) %in% c(1, 2), 1L, 2L)
+    # }
 
     ## ---------------------------------------------------------------------------
     ## Selected stratum
@@ -170,31 +188,31 @@ cvFunStr <- function(caseInd,
     CLsub <- CLobjectList
 
     if (space == "GSA") {
-        CLsub <- subset(CLsub, area == as.character(case$Var1[1]), link = TRUE)
+        CLsub <- COSTcore::subset(CLsub, area == as.character(case$Var1[1]), link = TRUE)
     }
 
     if (space == "Country") {
-        CLsub <- subset(CLsub, vslFlgCtry == as.character(case$Var1[1]), link = TRUE)
+        CLsub <-  COSTcore::subset(CLsub, vslFlgCtry == as.character(case$Var1[1]), link = TRUE)
     }
 
     if (time == "Q") {
-        CLsub <- subset(CLsub, quarter == as.character(case$Var2[1]))
+        CLsub <-  COSTcore::subset(CLsub, quarter == as.character(case$Var2[1]))
     }
 
     if (time == "S") {
         if (as.character(case$Var2[1]) == "1") {
-            CLsub <- subset(CLsub, quarter == 1 | quarter == 2)
+            CLsub <-  COSTcore::subset(CLsub, quarter == 1 | quarter == 2)
         } else {
             CLsub <- subset(CLsub, quarter == 3 | quarter == 4)
         }
     }
 
     if (technical == "lev6") {
-        CLsub <- subset(CLsub, foCatEu6 == as.character(case$Var3[1]))
+        CLsub <-  COSTcore::subset(CLsub, foCatEu6 == as.character(case$Var3[1]))
     }
 
     if (technical == "lev4") {
-        CLsub <- subset(CLsub, foCatEu5 == as.character(case$Var3[1]))
+        CLsub <-  COSTcore::subset(CLsub, foCatEu5 == as.character(case$Var3[1]))
     }
 
     ## ---------------------------------------------------------------------------
@@ -379,7 +397,7 @@ cvFunStr <- function(caseInd,
             next
         }
 
-        subCS <- csData(
+        subCS <- COSTcore::csData(
             tr = selectTR,
             hh = selectHH,
             sl = selectSL,
@@ -406,7 +424,7 @@ cvFunStr <- function(caseInd,
             sample(years_for_selection, 1)
         }
 
-        CLobject_ye <- subset(CLsub, year == CL_ye, link = TRUE)
+        CLobject_ye <- COSTcore::subset(CLsub, year == CL_ye, link = TRUE)
 
         if (nrow(CLobject_ye@cl) == 0L) {
             LANDINGS_EXISTS <- FALSE
@@ -424,13 +442,13 @@ cvFunStr <- function(caseInd,
 
         nMeas <- sum(subCS@hl$lenNum, na.rm = TRUE)
 
-        CSval <- csDataVal(subCS)
-        CLval <- clDataVal(CLobject_ye)
+        CSval <- COSTcore::csDataVal(subCS)
+        CLval <- COSTcore::clDataVal(CLobject_ye)
 
-        CScons <- csDataCons(CSval, stratification)
-        CLcons <- clDataCons(CLval, stratification)
+        CScons <- COSTcore::csDataCons(CSval, stratification)
+        CLcons <- COSTcore::clDataCons(CLval, stratification)
 
-        dbeOutput <- dbeObject(
+        dbeOutput <- COSTdbe::dbeObject(
             desc = sppName,
             species = sppName,
             catchCat = "Lan",
@@ -439,7 +457,7 @@ cvFunStr <- function(caseInd,
         )
 
         raising <- try(
-            RaiseLgth(
+            COSTdbe::RaiseLgth(
                 dbeOutput,
                 CScons,
                 CLcons,

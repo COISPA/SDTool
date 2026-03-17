@@ -64,6 +64,7 @@
 #' }
 #'
 #' @keywords internal
+#' @export
 cvFunStr_FixedNoTrips <- function(caseInd,
                                   stratification,
                                   availStrat,

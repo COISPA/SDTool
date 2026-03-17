@@ -12,7 +12,7 @@ convert_cl_to_costCL(
   out_dir = ".",
   write_csv = FALSE,
   csv_path = file.path(out_dir, "SDEF CL data.csv"),
-  write_rds = FALSE,
+  write_rds = TRUE,
   rds_path = file.path(out_dir, "costCL.rds")
 )
 }

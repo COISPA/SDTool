@@ -48,6 +48,7 @@
 #' }
 #'
 #' @keywords internal
+#' @export
 indMeasNoStr_count <- function(iter,
                                availStrat,
                                availSamp,

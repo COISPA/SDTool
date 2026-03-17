@@ -43,6 +43,7 @@
 #' }
 #'
 #' @keywords internal
+#' @export
 noMeasBySampleByStrTripHaul <- function(i,
                                         tabStrat,
                                         CSsp,

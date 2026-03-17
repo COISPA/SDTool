@@ -25,6 +25,7 @@
 #' localMaxima(x)
 #'
 #' @keywords internal
+#' @export
 localMaxima <- function(x) {
 
     ## ---------------------------------------------------------------------------

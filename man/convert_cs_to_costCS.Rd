@@ -12,7 +12,7 @@ convert_cs_to_costCS(
   bad_rm = FALSE,
   write_csv = FALSE,
   out_dir = ".",
-  write_rds = FALSE,
+  write_rds = TRUE,
   rds_path = file.path(out_dir, "costCS.rds"),
   fill_na = -1
 )
