@@ -2,3 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
+.test_SDTool.R
+.05_1_min_accepted_sample_size.csv
+.05_1_stratification_results.csv
