@@ -65,7 +65,8 @@
 #'
 #' @keywords internal
 #' @export
-#' @import COSTcore COSTdbe
+#' @import COSTcore COSTdbe COSTeda
+#' @importFrom COSTdbe subsetSpp
 
 cvFunStr <- function(caseInd,
                      stratification,
@@ -88,9 +89,8 @@ cvFunStr <- function(caseInd,
         availSamp
         CSobject=CS_boot
         CLobjectList=CL_boot
-        target_SPECIES
+        sppName=target_SPECIES
         nIter=5
-        space
         time
         technical
         lengthStr_dataframe =LengthStr_dataframe

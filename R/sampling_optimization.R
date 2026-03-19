@@ -13,7 +13,6 @@
 #' @param time Time stratification. One of `"Y"`, `"Q"`, `"S"`.
 #' @param technical Technical stratification. One of `"lev4"`, `"lev6"`, `"NONE"`.
 #' @param target_SPECIES Character string with the target species scientific name.
-#' @param species_code Optional short code used in output file names.
 #' @param nIter Number of bootstrap iterations.
 #' @param threshold_for_recycling_rate Threshold used in recycling-rate plots.
 #' @param output_dir Directory where outputs will be saved.
@@ -33,7 +32,6 @@ sampling_optimization <- function(CS,
                                   time = c("Y", "Q", "S"),
                                   technical = c("lev4", "lev6", "NONE"),
                                   target_SPECIES,
-                                  species_code = NULL,
                                   nIter = 50,
                                   threshold_for_recycling_rate = 0.25,
                                   output_dir = tempdir(),
@@ -50,6 +48,7 @@ sampling_optimization <- function(CS,
         target_SPECIES = target_species
         nIter = 20      # basso per test veloce
         output_dir = out_dir
+
     }
 
     ## -------------------------------------------------------------------------
@@ -77,11 +76,9 @@ sampling_optimization <- function(CS,
         stop("`past_situations` must be a data.frame.")
     }
 
-    if (is.null(species_code) || !nzchar(species_code)) {
-        species_code <- gsub(" ", "_", target_SPECIES)
-    }
 
-    res_dir <- file.path(output_dir, paste0("Optimization_", species_code))
+    res_dir <- file.path(output_dir, paste0("Optimization"))
+
     dir.create(res_dir, recursive = TRUE, showWarnings = FALSE)
 
     ## -------------------------------------------------------------------------
@@ -335,10 +332,10 @@ sampling_optimization <- function(CS,
         stop("Bootstrap CV estimation failed for all strata.")
     }
 
-    cv_boot_file <- file.path(res_dir, paste0(species_code, "_CV_from_bootstrap.csv"))
+    cv_boot_file <- file.path(res_dir, paste0("_CV_from_bootstrap.csv"))
     write.table(resOptCV_final, cv_boot_file, sep = ";", row.names = FALSE, na = "")
 
-    raised_length_file <- file.path(res_dir, paste0(species_code, "_Raised_length_distribution_from_bootstrap.csv"))
+    raised_length_file <- file.path(res_dir, paste0("_Raised_length_distribution_from_bootstrap.csv"))
     write.table(LengthStr_dataframe, raised_length_file, sep = ";", row.names = FALSE, na = "")
 
     ## -------------------------------------------------------------------------
@@ -374,8 +371,7 @@ sampling_optimization <- function(CS,
 
         file_name <- file.path(
             res_dir,
-            paste0(
-                species_code, "_Bootstrap_CVs_",
+            paste0("_Bootstrap_CVs_",
                 availStrat$Var1[i], "_", availStrat$Var2[i], "_", availStrat$Var3[i], ".png"
             )
         )
@@ -391,12 +387,12 @@ sampling_optimization <- function(CS,
     sampSizeRange_list <- vector("list", nrow(availStrat))
 
     for (nr_str in seq_len(nrow(availStrat))) {
-        sampSizeRange_list[[nr_str]] <- selectSampRange2(nr_str, availStrat, resOptCV_final,table_min_accepted_sample_size,output_dir,species_code)
+        sampSizeRange_list[[nr_str]] <- selectSampRange2(nr_str, availStrat, resOptCV_final,table_min_accepted_sample_size,output_dir)
     }
 
     sampSizeRange <- data.table::rbindlist(sampSizeRange_list, fill = TRUE)
 
-    optimized_sample_size_file <- file.path(res_dir, paste0(species_code, "_Optimized_sample_size.csv"))
+    optimized_sample_size_file <- file.path(res_dir, paste0("Optimized_sample_size.csv"))
     write.table(sampSizeRange, optimized_sample_size_file, sep = ";", row.names = FALSE, na = "")
 
     ## -------------------------------------------------------------------------
@@ -470,8 +466,7 @@ sampling_optimization <- function(CS,
 
         file_name <- file.path(
             res_dir,
-            paste0(
-                species_code, "_RecyclingRate_vs_trips_",
+            paste0("_RecyclingRate_vs_trips_",
                 availStrat$Var1[i], "_", availStrat$Var2[i], "_", availStrat$Var3[i], ".png"
             )
         )
@@ -557,8 +552,7 @@ sampling_optimization <- function(CS,
 
             file_name <- file.path(
                 res_dir,
-                paste0(
-                    species_code, "_CV_vs_trips_",
+                paste0("_CV_vs_trips_",
                     availStrat$Var1[i], "_", availStrat$Var2[i], "_", availStrat$Var3[i], ".png"
                 )
             )
@@ -573,7 +567,6 @@ sampling_optimization <- function(CS,
     ## -------------------------------------------------------------------------
     invisible(list(
         species = target_SPECIES,
-        species_code = species_code,
         output_dir = res_dir,
         stratification = list(
             space = col_ele_var1,

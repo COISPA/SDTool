@@ -17,8 +17,6 @@
 #'   accepted sample size by stratum. It must contain the columns
 #'   \code{space}, \code{time}, \code{technical}, and \code{min_accepted_ss}.
 #' @param output_dir Directory where the density plot will be saved.
-#' @param rs_shortcode Character string used in the output file name.
-#'
 #' @return A data.frame with the selected sample-size solutions and associated
 #'   summary statistics. The returned object includes the columns:
 #'   \code{Var1}, \code{Var2}, \code{Var3}, \code{solutions}, \code{maxCV},
@@ -58,8 +56,7 @@ selectSampRange2 <- function(indStr,
                              availStrat,
                              cvFunS2,
                              table_min_accepted_sample_size,
-                             output_dir,
-                             rs_shortcode) {
+                             output_dir) {
 
     ## ---------------------------------------------------------------------------
     ## Checks
@@ -263,7 +260,7 @@ selectSampRange2 <- function(indStr,
     file_name <- file.path(
         output_dir,
         paste0(
-            rs_shortcode, " - CV Density function ",
+"Optimization/","CV Density function ",
             cvFun0$Var1[1], "-", cvFun0$Var2[1], "-", cvFun0$Var3[1],
             ".png"
         )
