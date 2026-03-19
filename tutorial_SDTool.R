@@ -92,7 +92,7 @@ res <- sampling_optimization(
     time = "Q",
     technical = "lev4",
     target_SPECIES = target_species,
-    nIter = 5,      # basso per test veloce
+    nIter = 20,
     output_dir = out_dir
 )
 
